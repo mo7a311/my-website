@@ -7,6 +7,7 @@ import { renderDestination, loadDestinationData } from './pages/Destination.js';
 import { renderRecommendations, loadRecommendationsData } from './pages/Recommendations.js';
 import { renderPreferences, loadPreferencesData } from './pages/Preferences.js';
 import { renderBookmarks, loadBookmarksData } from './pages/Bookmarks.js';
+import { renderDashboard, loadDashboardData } from './pages/Dashboard.js';
 
 export function setupRouter(appElement) {
   const dynamicContent = appElement.querySelector('#dynamic-content');
@@ -42,6 +43,16 @@ export function setupRouter(appElement) {
       if(heroSection) heroSection.style.display = 'none';
       dynamicContent.innerHTML = renderBookmarks();
       loadBookmarksData();
+    },
+    'dashboard': () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.hash = 'login';
+        return;
+      }
+      if(heroSection) heroSection.style.display = 'none';
+      dynamicContent.innerHTML = renderDashboard();
+      loadDashboardData();
     },
     'ai-recommendations': () => {
       if(heroSection) heroSection.style.display = 'none';

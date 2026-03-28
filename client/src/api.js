@@ -224,3 +224,19 @@ export async function removeBookmark(placeId) {
   }
   return response.json();
 }
+
+export async function fetchMyBookings() {
+  const token = localStorage.getItem('token');
+  if (!token) return [];
+  try {
+    const response = await fetch(`${API_URL}/bookings/my-bookings`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) return [];
+    const result = await response.json();
+    return result.data || [];
+  } catch (err) {
+    console.error('Error fetching bookings:', err);
+    return [];
+  }
+}
